@@ -27,6 +27,7 @@ jobs:
           url: http://54.92.212.47:8200
           method: jwt
           role: gh-actions-role
+          jwtGithubAudience: https://github.com/srinivasakpysj
           secrets: |
             aws/creds/terraform-role access_key | AWS_ACCESS_KEY_ID ;
             aws/creds/terraform-role secret_key | AWS_SECRET_ACCESS_KEY
