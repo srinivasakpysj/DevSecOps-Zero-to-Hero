@@ -18,28 +18,22 @@ jobs:
         working-directory: ./terraform
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Fetch AWS Credentials from Vault
+      - name: Fetch Keys from Vault
         uses: hashicorp/vault-action@v3
         with:
           url: http://54.92.212.47:8200
-          method: jwt
           role: gh-actions-role
-          jwtGithubAudience: https://github.com/srinivasakpysj
+          method: jwt
           secrets: |
             aws/creds/terraform-role access_key | AWS_ACCESS_KEY_ID ;
             aws/creds/terraform-role secret_key | AWS_SECRET_ACCESS_KEY
 
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+      - uses: hashicorp/setup-terraform@v3
 
-      - name: Terraform Init
-        run: terraform init
+      - run: terraform init
 
-      - name: Terraform Plan
-        run: terraform plan
+      - run: terraform plan
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+      - run: terraform apply -auto-approve
