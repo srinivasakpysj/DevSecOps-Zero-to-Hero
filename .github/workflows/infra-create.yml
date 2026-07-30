@@ -1,8 +1,5 @@
 name: Terraform Deployment
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 permissions:
   id-token: write
@@ -18,12 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Debug OIDC audience
-        run: |
-          curl -sSL "$ACTIONS_ID_TOKEN_REQUEST_URL" \
-            -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-          | jq -r '.value' | cut -d '.' -f2 | base64 -d 2>/dev/null | jq .
-
       - name: Fetch Keys from Vault
         uses: hashicorp/vault-action@v3
         with:
@@ -35,7 +26,6 @@ jobs:
             aws/creds/terraform-role secret_key | AWS_SECRET_ACCESS_KEY
 
       - uses: hashicorp/setup-terraform@v3
-
       - run: terraform init
       - run: terraform plan
       - run: terraform apply -auto-approve
