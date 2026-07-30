@@ -21,7 +21,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Fetch AWS Credentials from HashiCorp Vault
+      - name: Fetch AWS Credentials from Vault
         uses: hashicorp/vault-action@v3
         with:
           url: http://54.92.212.47:8200
